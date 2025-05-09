@@ -4,7 +4,7 @@ const tileTypes = [
   { name: 'Lion', color: '#984B2B', svg: 'icons/lion.svg' },
   { name: 'Giraffe', color: '#F4E5D6', svg: 'icons/giraffe.svg', textColor: '#795548' },
   { name: 'Drum', color: '#5C4033', svg: 'icons/drum.svg' },
-  { name: 'Basket', color: '#E07622', svg: 'icons/basket.svg' },
+  { name: 'Basket', color: '#E07622', svg: 'https://github.com/MrSheima/african-safari-match3/blob/main/icons/basket.svg' },
   { name: 'Stone Carving', color: '#8C471B', svg: 'icons/stonecarving.svg' }
 ];
 
