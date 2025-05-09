@@ -1,11 +1,11 @@
 // Tile types with name, color, and SVG filename (relative to root)
 const tileTypes = [
-  { name: 'Elephant', color: '#CC7722', svg: 'icons/elephant.svg' },
-  { name: 'Lion', color: '#984B2B', svg: 'icons/lion.svg' },
-  { name: 'Giraffe', color: '#F4E5D6', svg: 'icons/giraffe.svg', textColor: '#795548' },
-  { name: 'Drum', color: '#5C4033', svg: 'icons/drum.svg' },
+  { name: 'Elephant', color: '#CC7722', svg: 'https://github.com/MrSheima/african-safari-match3/blob/main/icons//elephant.svg' },
+  { name: 'Lion', color: '#984B2B', svg: 'https://github.com/MrSheima/african-safari-match3/blob/main/icons/lion.svg' },
+  { name: 'Giraffe', color: '#F4E5D6', svg: 'https://github.com/MrSheima/african-safari-match3/blob/main/icons/giraffe.svg', textColor: '#795548' },
+  { name: 'Drum', color: '#5C4033', svg: 'https://github.com/MrSheima/african-safari-match3/blob/main/icons/drum.svg' },
   { name: 'Basket', color: '#E07622', svg: 'https://github.com/MrSheima/african-safari-match3/blob/main/icons/basket.svg' },
-  { name: 'Stone Carving', color: '#8C471B', svg: 'icons/stonecarving.svg' }
+  { name: 'Stone Carving', color: '#8C471B', svg: 'https://github.com/MrSheima/african-safari-match3/blob/main/icons/stonecarving.svg' }
 ];
 
 let gridSize = 8;
