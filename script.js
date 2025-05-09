@@ -1,3 +1,4 @@
+// Tile types with name, color, and SVG filename (relative to root)
 const tileTypes = [
   { name: 'Elephant', color: '#CC7722', svg: 'icons/elephant.svg' },
   { name: 'Lion', color: '#984B2B', svg: 'icons/lion.svg' },
@@ -16,8 +17,9 @@ let scoreGoal = 800;
 let moves = 0;
 let movesLimit = 25;
 let timerInterval = null;
-let timeLeft = 60;
+let timeLeft = 60; // seconds
 
+// Levels data with increasing difficulty and decreasing time
 const levels = [
   { gridSize: 8, scoreGoal: 800, movesLimit: 25, timeLimit: 60 },
   { gridSize: 8, scoreGoal: 1200, movesLimit: 24, timeLimit: 55 },
@@ -31,10 +33,12 @@ const levels = [
   { gridSize: 8, scoreGoal: 5000, movesLimit: 16, timeLimit: 30 }
 ];
 
+// Returns a random tile index
 function randomTile() {
   return Math.floor(Math.random() * tileTypes.length);
 }
 
+// Create a new board filled with random tiles
 function createBoard() {
   board = [];
   for (let r = 0; r < gridSize; r++) {
@@ -46,6 +50,7 @@ function createBoard() {
   }
 }
 
+// Draw the game board to the DOM
 function drawBoard() {
   const boardDiv = document.getElementById('game-board');
   boardDiv.innerHTML = '';
@@ -66,11 +71,13 @@ function drawBoard() {
       }
       div.onclick = () => selectTile(r, c);
 
+      // Add SVG icon as image
       const img = document.createElement('img');
       img.src = tile.svg;
       img.alt = tile.name;
       div.appendChild(img);
 
+      // Add label below icon
       const label = document.createElement('div');
       label.className = 'tile-label';
       label.textContent = tile.name;
@@ -81,6 +88,7 @@ function drawBoard() {
   }
 }
 
+// Handle tile selection and swapping logic
 function selectTile(r, c) {
   if (selected) {
     if (selected.row === r && selected.col === c) {
@@ -102,10 +110,12 @@ function selectTile(r, c) {
   drawBoard();
 }
 
+// Check if two tiles are adjacent
 function isAdjacent(a, b) {
   return (Math.abs(a.row - b.row) + Math.abs(a.col - b.col)) === 1;
 }
 
+// Swap two tiles and check for matches
 function swapTiles(a, b) {
   const temp = board[a.row][a.col];
   board[a.row][a.col] = board[b.row][b.col];
@@ -113,6 +123,7 @@ function swapTiles(a, b) {
   drawBoard();
   setTimeout(() => {
     if (!checkAndClearMatches()) {
+      // No match, swap back
       const temp2 = board[a.row][a.col];
       board[a.row][a.col] = board[b.row][b.col];
       board[b.row][b.col] = temp2;
@@ -123,8 +134,10 @@ function swapTiles(a, b) {
   }, 200);
 }
 
+// Check for horizontal and vertical matches and clear them
 function checkAndClearMatches() {
   let matched = [];
+  // Horizontal matches
   for (let r = 0; r < gridSize; r++) {
     let count = 1;
     for (let c = 1; c < gridSize; c++) {
@@ -141,6 +154,7 @@ function checkAndClearMatches() {
       for (let k = 0; k < count; k++) matched.push([r, gridSize - 1 - k]);
     }
   }
+  // Vertical matches
   for (let c = 0; c < gridSize; c++) {
     let count = 1;
     for (let r = 1; r < gridSize; r++) {
@@ -157,12 +171,15 @@ function checkAndClearMatches() {
       for (let k = 0; k < count; k++) matched.push([gridSize - 1 - k, c]);
     }
   }
+  // Remove duplicates
   matched = matched.map(([r, c]) => `${r},${c}`);
   matched = [...new Set(matched)].map(str => str.split(',').map(Number));
   if (matched.length === 0) return false;
+  // Clear matched tiles
   matched.forEach(([r, c]) => {
     board[r][c] = null;
   });
+  // Increase score
   score += matched.length * 50;
   updateScoreMoves();
   setTimeout(() => {
@@ -172,6 +189,7 @@ function checkAndClearMatches() {
   return true;
 }
 
+// Make tiles fall down and fill empty spaces
 function cascadeTiles() {
   for (let c = 0; c < gridSize; c++) {
     for (let r = gridSize - 1; r >= 0; r--) {
@@ -190,13 +208,14 @@ function cascadeTiles() {
   drawBoard();
   setTimeout(() => {
     if (checkAndClearMatches()) {
-      // Cascade again
+      // Cascade again if new matches
     } else {
       checkLevelEnd();
     }
   }, 200);
 }
 
+// Check if level is complete or failed
 function checkLevelEnd() {
   if (score >= scoreGoal) {
     clearInterval(timerInterval);
@@ -208,6 +227,7 @@ function checkLevelEnd() {
   }
 }
 
+// Update score, moves, and timer display
 function updateScoreMoves() {
   document.getElementById('score').textContent = `Score: ${score}`;
   document.getElementById('moves').textContent = `Moves: ${moves}/${movesLimit}`;
@@ -223,6 +243,7 @@ function updateTimer() {
   }
 }
 
+// Start a new level
 function startLevel(lvl) {
   level = lvl;
   if (level > levels.length) {
@@ -252,10 +273,12 @@ function startLevel(lvl) {
   }, 100);
 }
 
+// Next level button handler
 document.getElementById('next-level').onclick = () => {
   startLevel(level + 1);
 };
 
+// Loading screen fade out and start game
 window.addEventListener('load', () => {
   const loadingScreen = document.getElementById('loading-screen');
   const body = document.body;
